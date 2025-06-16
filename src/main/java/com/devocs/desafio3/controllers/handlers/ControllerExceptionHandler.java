@@ -34,6 +34,7 @@ public class ControllerExceptionHandler {
         return ResponseEntity.status(status).body(err);
     }
 
+
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<CustomError> entityNotFound(EntityNotFoundException e, HttpServletRequest request){
         HttpStatus status = HttpStatus.NOT_FOUND;
