@@ -3,6 +3,7 @@ package com.devocs.desafio3.controllers.handlers;
 import com.devocs.desafio3.dtos.errors.CustomError;
 import com.devocs.desafio3.dtos.errors.ValidationError;
 import com.devocs.desafio3.services.exceptions.ResourceNotFoundException;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,6 +31,13 @@ public class ControllerExceptionHandler {
         for (FieldError f : e.getBindingResult().getFieldErrors()){
             err.addErrors(f.getField(), f.getDefaultMessage());
         }
+        return ResponseEntity.status(status).body(err);
+    }
+
+    @ExceptionHandler(EntityNotFoundException.class)
+    public ResponseEntity<CustomError> entityNotFound(EntityNotFoundException e, HttpServletRequest request){
+        HttpStatus status = HttpStatus.NOT_FOUND;
+        CustomError err = new CustomError(Instant.now(), status.value(), "Id do cliente inexistente", request.getRequestURI());
         return ResponseEntity.status(status).body(err);
     }
 

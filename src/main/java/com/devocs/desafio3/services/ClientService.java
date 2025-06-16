@@ -4,6 +4,7 @@ import com.devocs.desafio3.dtos.ClientDTO;
 import com.devocs.desafio3.entities.Client;
 import com.devocs.desafio3.repositories.ClientRepository;
 import com.devocs.desafio3.services.exceptions.ResourceNotFoundException;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -41,6 +42,15 @@ public class ClientService {
         client = repository.save(client);
         return new ClientDTO(client);
     }
+
+    @Transactional
+    public ClientDTO update(Long id, ClientDTO dto){
+            Client client = repository.getReferenceById(id);
+            copyDtoToEntity(dto, client);
+            client = repository.save(client);
+            return new ClientDTO(client);
+    }
+
 
     public void copyDtoToEntity(ClientDTO dto, Client client){
         client.setName(dto.getName());
