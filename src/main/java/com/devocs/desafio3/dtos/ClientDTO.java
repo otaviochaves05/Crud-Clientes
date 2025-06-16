@@ -1,6 +1,9 @@
 package com.devocs.desafio3.dtos;
 
 import com.devocs.desafio3.entities.Client;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.PastOrPresent;
+import org.aspectj.bridge.MessageUtil;
 
 import java.time.LocalDate;
 
@@ -8,12 +11,14 @@ public class ClientDTO {
 
     private Long id;
 
+    @NotBlank(message = "Campo requerido")
     private String name;
 
     private String cpf;
 
     private Double income;
 
+    @PastOrPresent(message = "A data de nascimento não pode ser futura")
     private LocalDate birthDate;
 
     private Integer children;

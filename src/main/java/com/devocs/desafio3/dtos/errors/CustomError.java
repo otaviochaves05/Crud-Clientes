@@ -1,4 +1,4 @@
-package com.devocs.desafio3.dtos;
+package com.devocs.desafio3.dtos.errors;
 
 import java.time.Instant;
 
